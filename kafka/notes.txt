@@ -1,0 +1,7 @@
+https://strimzi.io/quickstarts/
+
+https://operatorhub.io/operator/strimzi-kafka-operator
+
+https://strimzi.io/docs/operators/in-development/full/overview#converters
+
+https://www.youtube.com/watch?v=FED4u6er9DE

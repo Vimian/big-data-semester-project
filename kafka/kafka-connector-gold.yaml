@@ -8,6 +8,14 @@ spec:
     class: io.confluent.connect.replicator.ReplicatorSourceConnector
     tasksMax: 1
     config:
+        consumer.properties:
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            group.id: replicator-group
+            bootstrap.servers: my-cluster-kafka-bootstrap:9092
+        #            enable.auto.commit: "false"
+        #            auto.offset.reset: earliest
         key.converter: org.apache.kafka.connect.json.JsonConverter
         key.converter.schemas.enable: false
         value.converter: io.confluent.connect.avro.AvroConverter
+        topic: gold-avro

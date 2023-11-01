@@ -32,5 +32,6 @@ jobs:
   
   DockerRunTwitterAPI:
     runs-on: ubuntu-latest
+    needs: TwitterAPI
     steps:
       - uses: actions/checkout@v2

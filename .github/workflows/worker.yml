@@ -34,3 +34,4 @@ jobs:
         working-directory: ${{env.working-directory}}
       - name: Build
         run: dotnet build
+        working-directory: ${{env.working-directory}}

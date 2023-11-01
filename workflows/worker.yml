@@ -1,0 +1,29 @@
+name: Worker
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - AI's
+    pull_request:
+      branches:
+        - main
+        - dev
+
+env:
+  docker_username: spedsbjerg
+
+jobs:
+  TwitterAPI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.x'
+          cache: true
+      - name: Install Dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build

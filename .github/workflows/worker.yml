@@ -25,8 +25,7 @@ jobs:
           dotnet-version: '7.x'
       - name: CurrentPath
         run: pwd
-      - name: cd
-        run: cd TwitterBitcoinAPI
+        working-directory: ${{env.working-directory}}
       - name: Directories
         run: ls
         working-directory: ${{env.working-directory}}

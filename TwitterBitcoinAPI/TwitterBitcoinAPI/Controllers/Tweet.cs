@@ -25,26 +25,26 @@ namespace TwitterBitcoinAPI.Controllers {
         [Name("Sentiment")]
         public string Sentiment {
             get {
-                if (Positive is true) {
+                if (Positive == true) {
                     return "Positive";
                 }
-                else if (Positive is not true){
+                else if (Positive != true){
                     return "Negative";
                 }
-                else {
+                else if (Positive is null) {
                     return "Other";
                 }
-                
+                return "other";
             }
             set {
-                if(value.ToLower().Equals("Positive") || value.ToLower().Equals("True")) {
+                if(value.ToLower().Equals("positive") || value.ToLower().Equals("true")) {
                     Positive = true;
                 }
-                else if (value.ToLower().Equals("Negative") ||value.ToLower().Equals("False")) {
+                else if (value.ToLower().Equals("negative") ||value.ToLower().Equals("false")) {
                     Positive = false;
                 }
                 else {
-                    Positive = false;
+                    Positive = null;
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace TwitterBitcoinAPI.Controllers {
 
         private DateTime DateTime;
         private string Text;
-        private bool Positive;
+        private bool? Positive;
 
         public override string ToString() {
             return $"Date: {DateTime.ToString()}, Text: {Text.ToString()}, Sentiment: {Positive.ToString()}";

@@ -11,6 +11,7 @@ namespace TwitterBitcoinAPI.Controllers {
             return Task.FromResult("200");
         }
 
+        //TODO: Not this
         [HttpGet]
         [Route("/GetLatestTweets/{number}")]
         public async Task<string> GetLatestTweets(string number) {

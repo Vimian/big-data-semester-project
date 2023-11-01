@@ -12,7 +12,7 @@ on:
 
 env:
   docker_username: spedsbjerg
-  working-directory: ./TwitterBotcoinAPI
+  working-directory: ./TwitterBitcoinAPI
 
 jobs:
   TwitterAPI:

@@ -23,15 +23,14 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x'
-      - name: CurrentPath
-        run: pwd
-        working-directory: ${{env.working-directory}}
-      - name: Directories
-        run: ls
-        working-directory: ${{env.working-directory}}
       - name: Install Dependencies
         run: dotnet restore
         working-directory: ${{env.working-directory}}
       - name: Build
         run: dotnet build
         working-directory: ${{env.working-directory}}
+  
+  DockerRunTwitterAPI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2

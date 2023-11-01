@@ -12,6 +12,7 @@ on:
 
 env:
   docker_username: spedsbjerg
+  working-directory: ./TwitterBotcoinAPI
 
 jobs:
   TwitterAPI:
@@ -29,7 +30,7 @@ jobs:
       - name: Directories
         run: ls
       - name: Install Dependencies
-        #run: dotnet restore
-        run: dotnet restore ./TwitterBotcoinAPI.sln
+        run: dotnet restore
+        working-directory: ${{env.working-directory}}
       - name: Build
         run: dotnet build

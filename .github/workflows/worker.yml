@@ -24,6 +24,8 @@ jobs:
           dotnet-version: '7.x'
       - name: CurrentPath
         run: pwd
+      - name: cd
+        run: cd TwitterBitcoinAPI
       - name: Directories
         run: ls
       - name: Install Dependencies

@@ -23,6 +23,7 @@ jobs:
         with:
           dotnet-version: '7.x'
       - name: Install Dependencies
-        run: dotnet restore
+        #run: dotnet restore
+        run: ./TwitterBotcoinAPI/TwitterBotcoinAPI.sln
       - name: Build
         run: dotnet build

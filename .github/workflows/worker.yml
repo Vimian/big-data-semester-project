@@ -38,18 +38,27 @@ jobs:
 
   StockMarketWebSocket:
     runs-on: ubuntu-latest
-
+    steps:
+      - uses: actions/checkout@v2
   DockerRunStockMarket:
     runs-on: ubuntu-latest
     needs: StockMarketWebSocket
-  
+    steps:
+      - uses: actions/checkout@v2
+
   GoldMarketWebSocket:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
 
   DockerRunGoldMarket:
     runs-on: ubuntu-latest
     needs: GoldMarketWebSocket
+    steps:
+      - uses: actions/checkout@v2
 
   DockerCompose:
     runs-on: ubuntu-latest
     needs: [DockerRunTwitterAPI, DockerRunStockMarket, DockerRunGoldMarket]
+    steps:
+      - uses: actions/checkout@v2    

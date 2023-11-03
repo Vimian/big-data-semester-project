@@ -35,3 +35,21 @@ jobs:
     needs: TwitterAPI
     steps:
       - uses: actions/checkout@v2
+
+  StockMarketWebSocket:
+    runs-on: ubuntu-latest
+
+  DockerRunStockMarket:
+    runs-on: ubuntu-latest
+    needs: StockMarketWebSocket
+  
+  GoldMarketWebSocket:
+    runs-on: ubuntu-latest
+
+  DockerRunGoldMarket:
+    runs-on: ubuntu-latest
+    needs: GoldMarketWebSocket
+
+  DockerCompose:
+    runs-on: ubuntu-latest
+    needs: [DockerRunTwitterAPI, DockerRunStockMarket, DockerRunGoldMarket]

@@ -38,9 +38,6 @@ jobs:
       - name: build image
         run: docker image build --tag twitter .
         working-directory: ${{env.working-directory}}
-      - name: docker run
-        run: docker run twitter
-        working-directory: ${{env.working-directory}}
 
   StockMarketWebSocket:
     runs-on: ubuntu-latest

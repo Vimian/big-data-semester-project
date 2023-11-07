@@ -48,11 +48,11 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x'
-      - name: Build
+      - name: Build Code
         run: dotnet build
         working-directory: ${{env.stock-directory}}
       - name: Run Build
-        run: dotnet run -- 127.0.0.1 80
+        run: dotnet run --project ./StockMarketWebSocket.csproj -- 127.0.0.1 80 actions
         working-directory: ${{env.stock-directory}}
       
   DockerRunStockMarket:

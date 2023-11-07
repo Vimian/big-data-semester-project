@@ -24,7 +24,7 @@ class Server {
         string ip = "127.0.0.1";
         int port = 80;
         if(args.Length != 0) {
-            if(args.Length != 2 || args.Length != 3) {
+            if(args.Length != 2 && args.Length != 3) {
                 Console.WriteLine($"Expected 2 args, got {args.Length}");
                 return;
             }

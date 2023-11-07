@@ -24,7 +24,16 @@ class Server {
         string ip = "127.0.0.1";
         int port = 80;
         if(args.Length != 0) {
+            if(args.Length != 2) {
+                Console.WriteLine($"Expected 2 args, got {args.Length}");
+                return;
+            }
             ip = args[0];
+            port = int.Parse(args[1]);
+            if(args.Length == 3 && args[2] == "actions") {
+                Console.WriteLine("Actions Run Test Parsed");
+                return;
+            }
         }
 
         var server = new TcpListener(IPAddress.Parse(ip), port);

@@ -1,7 +1,7 @@
 apiVersion: zookeeper.stackable.tech/v1alpha1
 kind: ZookeeperZnode
 metadata:
-    name: simple-hdfs-znode
+    name: hdfs-znode
 spec:
     clusterRef:
-        name: simple-zk
+        name: zk

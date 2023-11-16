@@ -1,7 +1,7 @@
 apiVersion: zookeeper.stackable.tech/v1alpha1
 kind: ZookeeperCluster
 metadata:
-    name: simple-zk
+    name: zk
 spec:
     image:
         productVersion: 3.8.0

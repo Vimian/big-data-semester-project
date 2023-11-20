@@ -9,16 +9,16 @@ spec:
     clusterConfig:
         zookeeperConfigMapName: hdfs-znode
         listenerClass: external-unstable
-        dfsReplication: 1
+        dfsReplication: 3
     nameNodes:
         roleGroups:
             default:
-                replicas: 1
+                replicas: 2
     dataNodes:
         roleGroups:
             default:
-                replicas: 1
+                replicas: 2
     journalNodes:
         roleGroups:
             default:
-                replicas: 1
+                replicas: 2

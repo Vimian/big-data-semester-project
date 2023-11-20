@@ -1,6 +1,7 @@
 -- create operators --
 
 helm repo add stackable-stable https://repo.stackable.tech/repository/helm-stable/
+helm repo update
 
 kubectl create namespace stackable
 
@@ -19,7 +20,14 @@ kubectl apply -f znode.yaml -n stackable
 kubectl apply -f hdfs.yaml -n stackable
 
 
+-- create client --
+
+kubectl apply -f hdfs-cli.yaml -n stackable
+
+
 -- clean up --
+
+kubectl delete -f hdfs-cli.yaml -n stackable
 
 kubectl delete -f zk.yaml -n stackable
 
@@ -30,3 +38,11 @@ kubectl delete -f hdfs.yaml -n stackable
 helm uninstall zookeeper-operator
 
 kubectl delete namespace stackable
+
+
+-- extra --
+
+kubectl exec -n stackable --stdin --tty hdfs-cli -- sh
+hdfs dfs -ls
+hdfs dfs -put
+exit

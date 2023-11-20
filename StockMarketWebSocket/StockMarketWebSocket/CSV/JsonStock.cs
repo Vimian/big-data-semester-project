@@ -1,15 +1,18 @@
-﻿using System.Text.Json;
-using CsvHelper.Configuration.Attributes;
+﻿using CsvHelper.Configuration.Attributes;
 
 namespace StockMarketWebSocket.CSV {
-    public class Stock : IStock {
+    public class JsonStock : Stock {
+        private string name = "";
+        public string Name {  get { return name; } set { name = value; } }
+
+        public JsonStock() {
+
+        }
         private DateTime dt;
         private float Open;
         private float High;
         private float Low;
         private float Close;
-
-        public Stock() { }
 
 
         [Name("date")]
@@ -63,7 +66,8 @@ namespace StockMarketWebSocket.CSV {
         }
 
         public override string ToString() {
-            return $"date: {dt.ToString()}, open: {open.ToString()}, high: {high.ToString()}, low {low.ToString()}, close: {close.ToString()}";
+            return $"name: {Name}, date: {dt.ToString()}, open: {open.ToString()}, high: {high.ToString()}, low {low.ToString()}, close: {close.ToString()}";
         }
+
     }
 }

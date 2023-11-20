@@ -38,6 +38,9 @@ class Server {
             else if(args.Length == 3 && args[2] == "path") {
                 path = args[2];
             }
+            else if (args.Length == 3) {
+                path = args[3];
+            }
         }
 
         var server = new TcpListener(IPAddress.Parse(ip), port);
@@ -119,11 +122,11 @@ class Server {
                         Console.WriteLine(que.Count);
                     }
                     int k = 0;
-                    while (k < 50) {
+                    while (k < 102) {
                         Thread.Sleep(1000);
                         SendEcho(stream, stockController.getStockString(k));
                         k++;
-                        if (k == 50) k = 0;
+                        if (k == 101) k = 0;
                     }
 
 

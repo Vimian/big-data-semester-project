@@ -12,6 +12,7 @@ namespace StockMarketWebSocket.CSV {
                     Stock stock = csv.GetRecord<Stock>();
                     string filename = Path.GetFileName(filePath);
                     stock.name = filename.Remove(filename.Length - 5, 4);//check if the name comes out correct
+                    Console.WriteLine(stock.ToString());
                     stocks.Add(stock);
                     i++;
                 }

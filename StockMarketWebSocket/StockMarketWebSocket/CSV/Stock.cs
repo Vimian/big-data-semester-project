@@ -16,15 +16,7 @@ namespace StockMarketWebSocket.CSV {
             this.name = name;
         }
 
-        [Name("name")]
-        public string name {
-            get {
-                return Name;
-            }
-            set {
-                Name = value;
-            }
-        }
+        public string name = "";
 
         [Name("date")]
         public DateTime date {

@@ -122,11 +122,11 @@ class Server {
                         Console.WriteLine(que.Count);
                     }
                     int k = 0;
-                    while (k < 102) {
+                    while (k < 100000) {
                         Thread.Sleep(1000);
                         SendEcho(stream, stockController.getStockString(k));
                         k++;
-                        if (k == 101) k = 0;
+                        if (k == 10000) k = 0;
                     }
 
 

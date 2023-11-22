@@ -120,7 +120,10 @@ namespace StockMarketWebSocket.CSV {
         }
 
         public string getStockString(int index) {
-            if(runs == filepaths.Count) retrievementIndex++;
+            if(runs == 50) {
+                retrievementIndex++;
+                runs = 0;
+            }
             runs++;
             return JsonSerializer.Serialize(CSVExtractor.ExtractDataFromCsv(filepaths[index], retrievementIndex)[0]);
             

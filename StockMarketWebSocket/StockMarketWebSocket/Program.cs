@@ -86,11 +86,6 @@ class Server {
 
                     stream.Write(response, 0, response.Length);
                     string msg = "Hello World";
-                    Console.WriteLine($"j:{j}");
-                    if(j > 0) {
-                        msg = "new message";
-                    }
-                    j++;
 
                     Queue<string> que = new Queue<string>(msg.SplitInGroups(125));
                     int len = que.Count;
@@ -122,11 +117,11 @@ class Server {
                         Console.WriteLine(que.Count);
                     }
                     int k = 0;
-                    while (k < 100000) {
-                        Thread.Sleep(1000);
+                    while (k < 50) {
+                        Thread.Sleep(10);
                         SendEcho(stream, stockController.getStockString(k));
                         k++;
-                        if (k == 10000) k = 0;
+                        if (k == 50) k = 0;
                     }
 
 

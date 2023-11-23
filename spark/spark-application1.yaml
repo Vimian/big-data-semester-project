@@ -1,0 +1,33 @@
+apiVersion: spark.stackable.tech/v1alpha1
+kind: SparkApplication
+metadata:
+    name: pyspark-pi
+spec:
+    #initContainers:
+    #    - name: init-config
+    #      image: apache/spark:3.1.2
+    #      command:
+    #          [
+    #              "sh",
+    #              "-c",
+    #              "curl -L http://hdfs-namenode-default-0:9870/webhdfs/v1/pi1.py?op=OPEN | echo > /spark-job/pi.py",
+    #          ]
+    #      volumeMounts:
+    #          - name: spark-job
+    #            mountPath: /spark-job
+    version: "1.0"
+    sparkImage: docker.stackable.tech/stackable/pyspark-k8s:3.3.0-stackable23.7.0
+    mode: cluster
+    #args:
+    #    - "sh"
+    #    - "-c"
+    #    - "curl -L http://hdfs-namenode-default-0:9870/webhdfs/v1/pi.py?op=OPEN | echo > /stackable/spark/pi.py"
+    #mainApplicationFile: local:///stackable/spark/examples/src/main/python/pi.py
+    #mainApplicationFile: "curl -L http://hdfs-namenode-default-0:9870/webhdfs/v1/pi.py?user.name=stackable&op=OPEN"
+    #mainApplicationFile: local:///stackable/spark/examples/src/main/python/pi.py
+    mainApplicationFile: "http://hdfs-namenode-default-0:9870/webhdfs/v1/pi.py?op=OPEN"
+    executor:
+        instances: 1
+        resources:
+            cpu:
+                max: "0.01"

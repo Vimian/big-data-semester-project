@@ -1,0 +1,23 @@
+apiVersion: spark.stackable.tech/v1alpha1
+kind: SparkApplication
+metadata:
+    name: pyspark-pi
+spec:
+    version: "1.0"
+    sparkImage: docker.stackable.tech/stackable/pyspark-k8s:3.3.0-stackable23.7.0
+    mode: cluster
+    mainApplicationFile: "s3a://spark-jobs/pi.py"
+    logFileDirectory:
+        s3:
+            prefix: eventlogs/
+            bucket:
+                reference: spark-history
+    s3connection:
+        reference: data-connection
+    #sparkConf:
+    #    # Maybe need to put Kafka connection details here
+    #    spark.hadoop.fs.s3a.aws.credentials.provider: "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
+    #    # The uri of the MinIO S3 server
+    #    spark.hadoop.fs.s3a.endpoint: "http://minio:9000"
+    executor:
+        instances: 3

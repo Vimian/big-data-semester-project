@@ -35,7 +35,10 @@ kubectl delete -f znode.yaml -n stackable
 
 kubectl delete -f hdfs.yaml -n stackable
 
-helm uninstall zookeeper-operator
+helm uninstall -n stackable zookeeper-operator
+helm uninstall -n stackable hdfs-operator
+helm uninstall -n stackable commons-operator
+helm uninstall -n stackable secret-operator
 
 kubectl delete namespace stackable
 

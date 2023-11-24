@@ -14,7 +14,27 @@ kubectl delete -f znode.yaml -n stackable
 
 kubectl delete -f hdfs.yaml -n stackable
 
-helm uninstall zookeeper-operator
+helm uninstall -n stackable zookeeper-operator
+helm uninstall -n stackable hdfs-operator
+helm uninstall -n stackable commons-operator
+helm uninstall -n stackable secret-operator
+
+cd ..
+
+ECHO Uninstall Spark
+ECHO.
+
+cd spark
+
+kubectl delete -f spark-configurations.yaml -n stackable
+
+kubectl delete -f spark-history-server.yaml -n stackable
+
+helm uninstall -n stackable commons-operator
+helm uninstall -n stackable secret-operator
+helm uninstall -n stackable spark-k8s-operator
+
+helm uninstall -n stackable minio
 
 kubectl delete namespace stackable
 

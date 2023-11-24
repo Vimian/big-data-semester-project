@@ -10,10 +10,7 @@ spec:
         s3:
             prefix: eventlogs/
             bucket:
-                inline:
-                    bucketName: spark-logs
-                    connection:
-                        reference: history-connection
+                reference: spark-history
     nodes:
         roleGroups:
             default:

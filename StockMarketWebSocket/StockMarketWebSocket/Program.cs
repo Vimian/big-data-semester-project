@@ -27,7 +27,7 @@ class Server {
         if(args.Length != 0) {
             ip = args[0];
             port = int.Parse(args[1]);
-            path = args[3]
+            path = args[3];
         }
 
         var server = new TcpListener(IPAddress.Parse(ip), port);

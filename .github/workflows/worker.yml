@@ -52,7 +52,7 @@ jobs:
         run: dotnet build
         working-directory: ${{env.stock-directory}}
       - name: Run Build
-        run: dotnet run --project ./StockMarketWebSocket/StockMarketWebSocket.csproj -- 127.0.0.1 80 .
+        run: dotnet run --project ./StockMarketWebSocket/StockMarketWebSocket.csproj
         working-directory: ${{env.stock-directory}}
       
   DockerRunStockMarket:

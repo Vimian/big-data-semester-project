@@ -28,7 +28,7 @@ class Server {
             ip = args[0];
             port = int.Parse(args[1]);
             path = args[2];
-            if(args[1] == "actions") {
+            if(args[2] == "actions") {
                 return;
             }
         }

@@ -16,6 +16,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 as runtime
 
 COPY --from=build-env /publish .
 
-EXPOSE 57693
+EXPOSE 57694
 
-ENTRYPOINT [ "dotnet", "StockMarketWebSocket.dll" ]
+ENTRYPOINT [ "dotnet", "StockMarketWebSocket.dll", "127.0.0.1", "57694"]

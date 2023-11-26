@@ -25,28 +25,15 @@ class Server {
         string ip = "127.0.0.1";
         int port = 80;
         if(args.Length != 0) {
-            if(args.Length != 2 && args.Length != 3) {
-                Console.WriteLine($"Expected 2 args, got {args.Length}");
-                return;
-            }
             ip = args[0];
             port = int.Parse(args[1]);
-            if(args.Length == 3 && args[2] == "actions") {
-                Console.WriteLine("Actions Run Test Parsed");
-                return;
-            }
-            else if(args.Length == 3 && args[2] == "path") {
-                path = args[2];
-            }
-            else if (args.Length == 3) {
-                path = args[3];
-            }
+            path = args[3]
         }
 
         var server = new TcpListener(IPAddress.Parse(ip), port);
 
         server.Start();
-        Console.WriteLine("Server has started on {0}:{1}, Waiting for a connection…", ip, port);
+        Console.WriteLine("Server has started on {0}:{1}, Waiting for a connectionï¿½", ip, port);
         StockController stockController = new StockController(true);
         while(true) {
 
@@ -140,7 +127,7 @@ class Server {
                         offset = 4;
                     }
                     else if(msglen == 127) {
-                        // To test the below code, we need to manually buffer larger messages — since the NIC's autobuffering
+                        // To test the below code, we need to manually buffer larger messages ï¿½ since the NIC's autobuffering
                         // may be too latency-friendly for this code to run (that is, we may have only some of the bytes in this
                         // websocket frame available through client.Available).
                         msglen = BitConverter.ToUInt64(new byte[] { bytes[9], bytes[8], bytes[7], bytes[6], bytes[5], bytes[4], bytes[3], bytes[2] }, 0);

@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  twitter_api:
+    build: ./TwitterBitcoinAPI/
+    ports:
+      - "57693:57693"
+
+  stock_market_websocket:
+    build: ./StockMarketWebSocket/
+    ports:
+      - "57694:57694"

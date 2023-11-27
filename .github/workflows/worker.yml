@@ -1,0 +1,79 @@
+name: Worker
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - API's
+    pull_request:
+      branches:
+        - main
+        - dev
+
+env:
+  docker_username: spedsbjerg
+  working-directory: ./TwitterBitcoinAPI
+  stock-directory: ./StockMarketWebSocket
+
+jobs:
+  TwitterAPI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x'
+      - name: Install Dependencies
+        run: dotnet restore
+        working-directory: ${{env.working-directory}}
+      - name: Build
+        run: dotnet build
+        working-directory: ${{env.working-directory}}
+  
+  DockerRunTwitterAPI:
+    runs-on: ubuntu-latest
+    needs: TwitterAPI
+    steps:
+      - uses: actions/checkout@v2
+      - name: build image
+        run: docker image build --tag twitter .
+        working-directory: ${{env.working-directory}}
+
+  StockMarketWebSocket:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x'
+      - name: Build Code
+        run: dotnet build
+        working-directory: ${{env.stock-directory}}
+      - name: Run Build
+        run: dotnet run --project ./StockMarketWebSocket/StockMarketWebSocket.csproj -- 127.0.0.1 80 actions
+        working-directory: ${{env.stock-directory}}
+      
+  DockerRunStockMarket:
+    runs-on: ubuntu-latest
+    needs: StockMarketWebSocket
+    steps:
+      - uses: actions/checkout@v2
+
+  GoldMarketWebSocket:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+  DockerRunGoldMarket:
+    runs-on: ubuntu-latest
+    needs: GoldMarketWebSocket
+    steps:
+      - uses: actions/checkout@v2
+
+  DockerCompose:
+    runs-on: ubuntu-latest
+    needs: [DockerRunTwitterAPI, DockerRunStockMarket, DockerRunGoldMarket]
+    steps:
+      - uses: actions/checkout@v2    

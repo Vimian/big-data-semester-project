@@ -40,6 +40,23 @@ kubectl delete namespace stackable
 
 cd ..
 
+ECHO Uninstall Kafka
+ECHO.
+
+cd kafka
+
+kubectl delete -f kafka.yaml -n kafka 
+
+kubectl delete -f kafka-connect.yaml -n kafka
+
+kubectl -n kafka delete -f "https://strimzi.io/install/latest?namespace=kafka"
+
+kubectl delete -f redpanda.yaml -n kafka
+
+kubectl delete namespace kafka
+
+cd ..
+
 ECHO.
 ECHO Uninstall successful
 pause

@@ -19,6 +19,16 @@ kubectl apply -f spark-history-server.yaml -n stackable
 
 cd ..
 
+
+ECHO Setup kafka debugger
+ECHO.
+
+cd kafka
+
+kubectl apply -f redpanda.yaml -n kafka
+
+cd ..
+
 ECHO.
 ECHO Setup debuggers successful
 pause

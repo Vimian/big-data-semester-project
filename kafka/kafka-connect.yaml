@@ -7,11 +7,7 @@ metadata:
 spec:
     version: 3.6.0
     replicas: 1
-    bootstrapServers: "kafka-cluster-kafka-bootstrap:9093"
-    #    tls:
-    #        trustedCertificates:
-    #            - secretName: kafka-cluster-cluster-ca-cert
-    #              certificate: ca.crt
+    bootstrapServers: "kafka-cluster-kafka-bootstrap:9092"
     config:
         group.id: kafka-connect-cluster
         offset.storage.topic: kafka-connect-cluster-offsets
@@ -19,8 +15,8 @@ spec:
         status.storage.topic: kafka-connect-cluster-status
         key.converter: org.apache.kafka.connect.json.JsonConverter
         value.converter: org.apache.kafka.connect.json.JsonConverter
-        key.converter.schemas.enable: true
-        value.converter.schemas.enable: true
+        key.converter.schemas.enable: false
+        value.converter.schemas.enable: false
         config.storage.replication.factor: 1
         offset.storage.replication.factor: 1
         status.storage.replication.factor: 1

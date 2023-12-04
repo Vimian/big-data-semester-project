@@ -30,7 +30,21 @@ if __name__ == "__main__":
         .select(from_json(col("value").cast("string"), schema=avro_schema).alias("data"))
     
     # Do something here
-    
+    open redis connection
+    redis = redis.Redis(host='localhost', port=6379, db=0)
+
+    date = json_df.select(
+        col("data.date")
+    )
+
+    sentiment = json_df.select(
+        col("data.sentiment")
+    )
+
+    if sentiment == "Positive":
+        redis.incr(date + ":positive")
+    else:
+        redis.incr(date + ":negative")
     
     # Write data to Kafka topic in Avro format
     #avro_df.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")\

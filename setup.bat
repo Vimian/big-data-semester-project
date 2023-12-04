@@ -56,6 +56,39 @@ kubectl apply -f spark-configurations.yaml -n stackable
 
 cd ..
 
+ECHO Setup Kafka
+ECHO.
+
+cd kafka
+
+ECHO create operators
+ECHO.
+
+kubectl create namespace kafka
+
+kubectl create -f "https://strimzi.io/install/latest?namespace=kafka" -n kafka
+
+kubectl apply -f kafka.yaml -n kafka
+
+ECHO create kafka topics
+
+kubectl apply -f ./topics/gold-json.yaml -n kafka
+kubectl apply -f ./topics/gold-avro.yaml -n kafka
+
+kubectl apply -f ./topics/stock-json.yaml -n kafka
+kubectl apply -f ./topics/stock-avro.yaml -n kafka
+
+kubectl apply -f ./topics/tweet-json.yaml -n kafka
+kubectl apply -f ./topics/tweet-avro.yaml -n kafka
+
+kubectl apply -f ./topics/result-paquet.yaml -n kafka
+
+ECHO create kafka cluster
+
+kubectl apply -f kafka-connect.yaml -n kafka
+
+cd ..
+
 ECHO.
 ECHO Setup successful
 pause

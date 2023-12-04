@@ -41,19 +41,24 @@ if __name__ == "__main__":
         col("data.sentiment")
     )
 
+    new_sentiment = {
+        "positive": null,
+        "negative": null
+    }
+
     if sentiment == "Positive":
-        redis.incr(date + ":positive")
+        new_sentiment["positive"] = redis.incr(date + ":positive")
     else:
-        redis.incr(date + ":negative")
+        new_sentiment["negative"] = redis.incr(date + ":negative")
     
     # Write data to Kafka topic in Avro format
     #avro_df.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")\
-    avro_df.writeStream\
+    json_df.writeStream\
         .format("kafka")\
         .outputMode("append")\
         .option("kafka.bootstrap.servers", "192.168.1.100:9092")\
-        .option("topic", "avro_topic")\
-        .option("valueFormat", "int")\
+        .option("topic", "json_sentiment")\
+        .option("valueFormat", "json")\
         .start()\
         .awaitTermination()
 

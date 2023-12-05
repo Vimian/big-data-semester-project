@@ -2,6 +2,12 @@
 
 ## Debuggers
 
+Redpanda
+
+```
+kubectl port-forward svc/redpanda  8080:8080 -n kafka
+```
+
 Minio webui
 
 ```

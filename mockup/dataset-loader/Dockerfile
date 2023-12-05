@@ -1,5 +1,5 @@
 #Dockerfile to build the image for the nodejs dataset loader
-FROM node:10.15.3-alpine
+FROM node:21.3.0-alpine3.17
 
 # Create app directory
 WORKDIR /usr/src/app

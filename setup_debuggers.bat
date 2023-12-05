@@ -29,6 +29,14 @@ kubectl apply -f redpanda.yaml -n kafka
 
 cd ..
 
+ECHO Setup redis debugger
+
+cd redis
+
+kubectl apply -f redisinsight.yaml -n redis
+
+cd ..
+
 ECHO.
 ECHO Setup debuggers successful
 pause

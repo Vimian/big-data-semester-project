@@ -89,6 +89,22 @@ kubectl apply -f kafka-connect.yaml -n kafka
 
 cd ..
 
+ECHO Setup redis
+ECHO.
+
+cd redis
+
+helm repo add ot-helm https://ot-container-kit.github.io/helm-charts/
+helm repo update
+
+kubectl create namespace redis
+
+helm install redis-operator ot-helm/redis-operator -n redis
+
+kubectl apply -f redis.yaml -n redis
+
+cd ..
+
 ECHO.
 ECHO Setup successful
 pause

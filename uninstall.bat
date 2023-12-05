@@ -57,12 +57,25 @@ kubectl delete namespace kafka
 
 cd ..
 
+ECHO Uninstall Redis
+ECHO.
+
+cd redis
+
+kubectl delete -f redis.yaml -n redis
+helm uninstall redis-operator -n redis
+kubectl delete namespace redis
+
+cd ..
+
 ECHO Uninstall dataset loader
 
 kubectl delete -f ./mockup/dataset-loader/dataset-loader.yaml -n mockup
 
 kubectl create namespace mockup
 kubectl delete namespace mockup
+
+cd ..
 
 ECHO.
 ECHO Uninstall successful

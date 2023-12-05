@@ -5,7 +5,10 @@ metadata:
 spec:
     version: "1.0"
     #sparkImage: docker.stackable.tech/stackable/pyspark-k8s:3.3.0-stackable23.7.0
-    sparkImage: "s3a://spark-jobs/pyspark-test.tar"
+    sparkImage: docker.stackable.tech/demos/pyspark-k8s-with-kafka-and-iceberg:3.3.0-stackable23.4
+    #sparkImage: docker.stackable.tech/stackable/spark-k8s:3.4.0-stackable23.7.0
+    #sparkImage:
+    #    productVersion: 3.5.0
     mode: cluster
     mainApplicationFile: "s3a://spark-jobs/tweet-sentiment.py"
     logFileDirectory:
@@ -17,12 +20,21 @@ spec:
         reference: data-connection
     deps:
         requirements:
-            - "redis"
-
+            - redis
     #sparkConf:
     #    # Maybe need to put Kafka connection details here
     #    spark.hadoop.fs.s3a.aws.credentials.provider: "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"
     #    # The uri of the MinIO S3 server
     #    spark.hadoop.fs.s3a.endpoint: "http://minio:9000"
+    #driver:
+    #    config:
+    #        volumeMounts:
+    #            - name: job-deps
+    #              mountPath: /dependencies
     executor:
         instances: 1
+    #    replicas: 1
+    #    config:
+    #        volumeMounts:
+    #            - name: job-deps
+    #              mountPath: /dependencies

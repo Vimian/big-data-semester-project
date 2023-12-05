@@ -14,42 +14,49 @@ avro_schema = """
 }
 """
 
+
+
 if __name__ == "__main__":
     spark = SparkSession\
         .builder\
         .appName("TweetSentiment")\
+        .config("spark.streaming.stopGracefullyOnShutdown", "true")\
+        .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0")\
+        .config("spark.sql.shuffle.partitions", 2)\
+        .master("local[*]")\
         .getOrCreate()
-    
+    print("000000000000000000000")
     # Read data from Kafka topic in JSON format
     json_df = spark.readStream\
         .format("kafka")\
-        .option("kafka.bootstrap.servers", "192.168.1.100:9092")\
+        .option("kafka.bootstrap.servers", "kafka-cluster-kafka-bootstrap.kafka:9092")\
         .option("subscribe", "tweet-json")\
         .option("startingOffsets", "earliest")\
-        .load()\
-        .select(from_json(col("value").cast("string"), schema=avro_schema).alias("data"))
-    
+        .load()
+    print("11111111111111111111")
     # Do something here
-    open redis connection
     redis = redis.Redis(host='localhost', port=6379, db=0)
-
+    print("22222222222222222222")
     date = json_df.select(
         col("data.date")
     )
+    print(date)
 
     sentiment = json_df.select(
         col("data.sentiment")
     )
-
+    print(sentiment)
     new_sentiment = {
         "positive": null,
         "negative": null
     }
-
+    print(new_sentiment)
+    print("33333333333333333333333333333333")
     if sentiment == "Positive":
         new_sentiment["positive"] = redis.incr(date + ":positive")
     else:
         new_sentiment["negative"] = redis.incr(date + ":negative")
+    print("4444444444444444444444444444444")
     
     # Write data to Kafka topic in Avro format
     #avro_df.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")\

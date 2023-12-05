@@ -4,7 +4,8 @@ metadata:
     name: tweet-sentiment
 spec:
     version: "1.0"
-    sparkImage: docker.stackable.tech/stackable/pyspark-k8s:3.3.0-stackable23.7.0
+    #sparkImage: docker.stackable.tech/stackable/pyspark-k8s:3.3.0-stackable23.7.0
+    sparkImage: "s3a://spark-jobs/pyspark-test.tar"
     mode: cluster
     mainApplicationFile: "s3a://spark-jobs/tweet-sentiment.py"
     logFileDirectory:
@@ -14,6 +15,10 @@ spec:
                 reference: spark-history
     s3connection:
         reference: data-connection
+    deps:
+        requirements:
+            - "redis"
+
     #sparkConf:
     #    # Maybe need to put Kafka connection details here
     #    spark.hadoop.fs.s3a.aws.credentials.provider: "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider"

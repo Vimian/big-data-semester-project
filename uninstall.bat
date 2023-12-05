@@ -57,6 +57,13 @@ kubectl delete namespace kafka
 
 cd ..
 
+ECHO Uninstall dataset loader
+
+kubectl delete -f ./mockup/dataset-loader/dataset-loader.yaml -n mockup
+
+kubectl create namespace mockup
+kubectl delete namespace mockup
+
 ECHO.
 ECHO Uninstall successful
 pause

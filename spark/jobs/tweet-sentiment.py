@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json
+import redis
 
 # Define Avro schema
 avro_schema = """
@@ -14,28 +15,26 @@ avro_schema = """
 }
 """
 
-
-
 if __name__ == "__main__":
     spark = SparkSession\
         .builder\
         .appName("TweetSentiment")\
-        .config("spark.streaming.stopGracefullyOnShutdown", "true")\
-        .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.0")\
-        .config("spark.sql.shuffle.partitions", 2)\
-        .master("local[*]")\
         .getOrCreate()
+    
     print("000000000000000000000")
+
     # Read data from Kafka topic in JSON format
     json_df = spark.readStream\
         .format("kafka")\
         .option("kafka.bootstrap.servers", "kafka-cluster-kafka-bootstrap.kafka:9092")\
         .option("subscribe", "tweet-json")\
-        .option("startingOffsets", "earliest")\
+        .option("startingOffsets", "earliest") \
         .load()
+    
     print("11111111111111111111")
+
     # Do something here
-    redis = redis.Redis(host='localhost', port=6379, db=0)
+    redisConnection = redis.Redis(host='localhost', port=6379, db=0)
     print("22222222222222222222")
     date = json_df.select(
         col("data.date")

@@ -57,6 +57,17 @@ kubectl delete namespace kafka
 
 cd ..
 
+ECHO Uninstall Redis
+ECHO.
+
+cd redis
+
+kubectl delete -f redis.yaml -n redis
+helm uninstall redis-operator -n redis
+kubectl delete namespace redis
+
+cd ..
+
 ECHO.
 ECHO Uninstall successful
 pause

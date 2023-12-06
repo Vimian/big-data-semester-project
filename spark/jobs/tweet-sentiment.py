@@ -1,82 +1,55 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import from_json
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
 import redis
 
-# Define Avro schema
-avro_schema = """
-{
-  "type": "tweet",
-  "name": "Tweet",
-  "fields": [
-    { "name": "date", "type": "int" },
-    { "name": "name", "type": "string" },
-    { "name": "name", "type": "string" }
-  ]
-}
-"""
+# Define schema of JSON data
+schema = StructType()\
+    .add("Date", StringType())\
+    .add("text", StringType())\
+    .add("Sentiment", StringType())
 
 if __name__ == "__main__":
+    # Create Spark session
     spark = SparkSession\
         .builder\
         .appName("TweetSentiment")\
         .getOrCreate()
     
-    print("000000000000000000000")
-
-    # Read data from Kafka topic in JSON format
+    # Read from Kafka topic in JSON format and load into Spark dataframe
     json_df = spark.readStream\
         .format("kafka")\
         .option("kafka.bootstrap.servers", "kafka-cluster-kafka-bootstrap.kafka:9092")\
         .option("subscribe", "tweet-json")\
-        .option("startingOffsets", "earliest") \
-        .load()
+        .option("startingOffsets", "earliest")\
+        .option("kafka.group.id", "tweet-sentiment")\
+        .load()\
+        .select(from_json(col("value").cast("string"), schema).alias("data"))\
+        .select("data.*")
+        # limit the number of records per trigger to 1
+        #.option("maxOffsetsPerTrigger", "1")\
     
-    print("11111111111111111111")
+    # Define a user-defined function (UDF) to print the values
+    def update_redis_udf(row):
+        # Create Redis connection
+        redis_connection = redis.Redis(host="redis-cluster-leader.redis", port=6379, decode_responses=True, db=0)
+        redis_connection.ping()
 
-    # Do something here
-    redisConnection = redis.Redis(host='localhost', port=6379, db=0)
-    print("22222222222222222222")
-    date = json_df.select(
-        col("data.date")
-    )
-    print(date)
+        # Key is <the date>:<the sentiment>
+        key = f"{row['Date']}:{row['Sentiment']}"
 
-    sentiment = json_df.select(
-        col("data.sentiment")
-    )
-    print(sentiment)
-    new_sentiment = {
-        "positive": null,
-        "negative": null
-    }
-    print(new_sentiment)
-    print("33333333333333333333333333333333")
-    if sentiment == "Positive":
-        new_sentiment["positive"] = redis.incr(date + ":positive")
-    else:
-        new_sentiment["negative"] = redis.incr(date + ":negative")
-    print("4444444444444444444444444444444")
-    
-    # Write data to Kafka topic in Avro format
-    #avro_df.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*)) AS value")\
-    json_df.writeStream\
-        .format("kafka")\
+        # Increment the value of the key if fails do it again
+        try:
+            redis_connection.incrby(key, 1)
+        except redis.exceptions.ResponseError as e:
+            #print(f"Error updating {key}")
+            update_redis_udf(row)
+        return
+
+    query = json_df.writeStream\
         .outputMode("append")\
-        .option("kafka.bootstrap.servers", "192.168.1.100:9092")\
-        .option("topic", "json_sentiment")\
-        .option("valueFormat", "json")\
-        .start()\
-        .awaitTermination()
+        .format("console")\
+        .foreach(update_redis_udf)\
+        .start()
 
-    #partitions = int(sys.argv[1]) if len(sys.argv) > 1 else 2
-    #n = 100000 * partitions
-
-    #def f(_: int) -> float:
-    #    x = random() * 2 - 1
-    #    y = random() * 2 - 1
-    #    return 1 if x ** 2 + y ** 2 <= 1 else 0
-
-    #count = spark.sparkContext.parallelize(range(1, n + 1), partitions).map(f).reduce(add)
-    #print("Pi is roughly %f" % (4.0 * count / n))
-
-    #spark.stop()
+    query.awaitTermination()

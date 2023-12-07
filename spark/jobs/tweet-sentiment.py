@@ -26,11 +26,8 @@ if __name__ == "__main__":
         .load()\
         .select(from_json(col("value").cast("string"), schema).alias("data"))\
         .select("data.*")
-        # limit the number of records per trigger to 1
-        #.option("maxOffsetsPerTrigger", "1")\
     
-    # Define a user-defined function (UDF) to print the values
-    def update_redis_udf(row):
+    def update_redis(row):
         # Create Redis connection
         redis_connection = redis.Redis(host="redis-cluster-leader.redis", port=6379, decode_responses=True, db=0)
         redis_connection.ping()
@@ -43,13 +40,13 @@ if __name__ == "__main__":
             redis_connection.incrby(key, 1)
         except redis.exceptions.ResponseError as e:
             #print(f"Error updating {key}")
-            update_redis_udf(row)
+            update_redis(row)
         return
 
     query = json_df.writeStream\
         .outputMode("append")\
         .format("console")\
-        .foreach(update_redis_udf)\
+        .foreach(update_redis)\
         .start()
 
     query.awaitTermination()

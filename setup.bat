@@ -83,6 +83,10 @@ kubectl apply -f ./topics/tweet-avro.yaml -n kafka
 
 kubectl apply -f ./topics/result-paquet.yaml -n kafka
 
+ECHO build kafka connect base image
+
+docker build -t cp-server-connect-base -f ./Dockerfile .
+
 ECHO create kafka cluster
 
 kubectl apply -f kafka-connect.yaml -n kafka

@@ -106,11 +106,11 @@ spec:
                       - name: CONNECT_GROUP_ID
                         value: "kafka-connect-group-id-01"
                       - name: CONNECT_CONFIG_STORAGE_TOPIC
-                        value: "_connect-configs"
+                        value: "kafka-connect-cluster-configs"
                       - name: CONNECT_OFFSET_STORAGE_TOPIC
-                        value: "_connect-offsets"
+                        value: "kafka-connect-cluster-offsets"
                       - name: CONNECT_STATUS_STORAGE_TOPIC
-                        value: "_connect-status"
+                        value: "kafka-connect-cluster-status"
                       - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
                         value: "3"
                       - name: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR

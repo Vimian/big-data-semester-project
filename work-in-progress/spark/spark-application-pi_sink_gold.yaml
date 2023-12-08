@@ -1,0 +1,21 @@
+apiVersion: spark.stackable.tech/v1alpha1
+kind: SparkApplication
+metadata:
+    name: sink-gold
+spec:
+    version: "1.0"
+    sparkImage: docker.stackable.tech/demos/pyspark-k8s-with-kafka-and-iceberg:3.3.0-stackable23.4
+    mode: cluster
+    mainApplicationFile: "s3a://spark-jobs/sink-gold.py"
+    logFileDirectory:
+        s3:
+            prefix: eventlogs/
+            bucket:
+                reference: spark-history
+    s3connection:
+        reference: data-connection
+    deps:
+        requirements:
+            - pyhdfs
+    executor:
+        instances: 1

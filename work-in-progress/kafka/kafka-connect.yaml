@@ -1,0 +1,38 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+    name: kafka-connect-cluster
+    annotations:
+        strimzi.io/use-connector-resources: "true"
+spec:
+    version: 3.6.0
+    #image: quay.io/saltincludedred/hdfs-sink-connect-cluster:latest
+    replicas: 1
+    bootstrapServers: "kafka-cluster-kafka-bootstrap:9092"
+    build:
+        output:
+            type: docker
+            image: quay.io/saltincludedred/hdfs-sink-connect-cluster:latest
+            pushSecret: quayio
+        plugins:
+            - name: my-plugin
+              artifacts:
+                  #- type: jar
+                  #  url: "https://packages.confluent.io/maven/io/confluent/kafka-connect-hdfs/10.2.0/kafka-connect-hdfs-10.2.0.jar"
+                  - type: maven
+                    repository: https://mvnrepository.com
+                    group: io.confluent
+                    artifact: kafka-connect-hdfs
+                    version: 10.2.0
+    config:
+        group.id: kafka-connect-cluster
+        offset.storage.topic: kafka-connect-cluster-offsets
+        config.storage.topic: kafka-connect-cluster-configs
+        status.storage.topic: kafka-connect-cluster-status
+        key.converter: org.apache.kafka.connect.json.JsonConverter
+        value.converter: org.apache.kafka.connect.json.JsonConverter
+        key.converter.schemas.enable: false
+        value.converter.schemas.enable: false
+        config.storage.replication.factor: 3
+        offset.storage.replication.factor: 3
+        status.storage.replication.factor: 3

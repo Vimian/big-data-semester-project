@@ -36,4 +36,4 @@ spec:
                       - name: CONNECT_CLUSTERS_NAME
                         value: "kafka-connect-cluster"
                       - name: CONNECT_CLUSTERS_URL
-                        value: "http://kafka-connect-cluster-connect:8083"
+                        value: "http://kafka-connect:8083"

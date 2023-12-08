@@ -36,8 +36,6 @@ helm uninstall -n stackable spark-k8s-operator
 
 helm uninstall -n stackable minio
 
-kubectl delete namespace stackable
-
 cd ..
 
 ECHO Uninstall Kafka
@@ -53,8 +51,6 @@ kubectl -n kafka delete -f "https://strimzi.io/install/latest?namespace=kafka"
 
 kubectl delete -f redpanda.yaml -n kafka
 
-kubectl delete namespace kafka
-
 cd ..
 
 ECHO Uninstall Redis
@@ -63,19 +59,14 @@ ECHO.
 cd redis
 
 kubectl delete -f redis.yaml -n redis
+kubectl delete -f redisinsight.yaml -n redis
 helm uninstall redis-operator -n redis
-kubectl delete namespace redis
 
 cd ..
 
 ECHO Uninstall dataset loader
 
 kubectl delete -f ./mockup/dataset-loader/dataset-loader.yaml -n mockup
-
-kubectl create namespace mockup
-kubectl delete namespace mockup
-
-cd ..
 
 ECHO.
 ECHO Uninstall successful

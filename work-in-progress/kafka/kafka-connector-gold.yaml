@@ -1,0 +1,18 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+    name: gold-sink-connector
+    labels:
+        strimzi.io/cluster: kafka-connect-cluster
+spec:
+    class: io.confluent.connect.hdfs.HdfsSinkConnector
+    tasksMax: 1
+    config:
+        topics: gold-json
+        flush.size: "3"
+        hdfs.url: "hdfs://hdfs-namenode-default-0.hdfs-namenode-default.stackable:8020"
+        format.class: "io.confluent.connect.hdfs.json.JsonFormat"
+        key.converter.schemas.enable: "false"
+        key.converter: org.apache.kafka.connect.storage.StringConverter
+        value.converter.schemas.enable: "false"
+        value.converter: org.apache.kafka.connect.json.JsonConverter

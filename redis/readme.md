@@ -33,6 +33,7 @@ kubectl port-forward svc/redisinsight-service  8001:8001 -n redis
 
 ```
 kubectl delete -f redis.yaml -n redis
+kubectl delete -f redisinsight.yaml -n redis
 helm uninstall redis-operator -n redis
 kubectl delete namespace redis
 ```

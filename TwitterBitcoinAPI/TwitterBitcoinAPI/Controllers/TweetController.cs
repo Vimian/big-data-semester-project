@@ -9,6 +9,7 @@ namespace TwitterBitcoinAPI.Controllers {
         [HttpGet]
         [Route("/")]//main page, used to check connection
         public Task<string> ConnectionCheck() {
+            Console.WriteLine(200);
             return Task.FromResult("200");
         }
 
@@ -16,6 +17,7 @@ namespace TwitterBitcoinAPI.Controllers {
         [HttpGet]
         [Route("/GetLatestTweets/{number}")]
         public async Task<string> GetLatestTweets(string number) {
+            Console.WriteLine($"GetLatestTweets/{number}");
             int _number;
             try {
                 _number = int.Parse(number);
@@ -31,6 +33,7 @@ namespace TwitterBitcoinAPI.Controllers {
         [HttpGet]
         [Route("/GetFirst/{number}")]
         public async Task<string> GetTenFirst(string number) {
+            Console.WriteLine($"GetFirst/{number}");
             int _number;
             try {
                 _number = int.Parse(number);
@@ -46,6 +49,7 @@ namespace TwitterBitcoinAPI.Controllers {
         [HttpGet]
         [Route("/GetBetween+{number0}&{number1}")]
         public async Task<string> GetBetween(string number0, string number1) {
+            Console.WriteLine($"/GetBetween+{number0}&{number1}");
             int _number0;
             int _number1;
             try {

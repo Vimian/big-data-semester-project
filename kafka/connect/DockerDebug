@@ -1,0 +1,10 @@
+FROM strimzi/kafka:0.20.1-kafka-2.5.0
+
+USER root:root
+
+# Install additional dependencies if needed
+
+USER 1001
+
+COPY connect-standalone.properties /opt/kafka/config/
+COPY connect-config.json /opt/kafka/config/

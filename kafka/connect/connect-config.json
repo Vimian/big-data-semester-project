@@ -1,0 +1,18 @@
+{
+  "name": "my-connect",
+  "config": {
+    "bootstrap.servers=kafka-cluster-kafka-bootstrap":9092,
+    "connector.class": "io.confluent.connect.http.HttpSinkConnector",
+    "tasks.max": "3",
+    "topics": "tweet-json",
+    "http.api.url": "http://localhost:57693/",
+    "headers": "Content-Type:application/json",
+    "http.method": "GET",
+    "retry.backoff.ms": "1000",
+    "retry.max.time.ms": "60000",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "false",
+    "key.converter.schemas.enable": "false"
+  }
+}

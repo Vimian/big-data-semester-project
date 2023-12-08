@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: dataset-loader
+spec:
+    containers:
+        - name: dataset-loader
+          image: dataset-loader:latest
+          imagePullPolicy: Never

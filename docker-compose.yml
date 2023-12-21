@@ -9,3 +9,8 @@ services:
     build: ./StockMarketWebSocket/
     ports:
       - "57694:57694"
+
+  gold_websocket:
+    build: ./GoldStockWebSocket/GoldWebSocket/
+    ports:
+      - "57695:57695"

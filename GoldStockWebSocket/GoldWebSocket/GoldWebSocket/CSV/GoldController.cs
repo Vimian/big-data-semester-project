@@ -5,7 +5,6 @@ namespace GoldWebSocket.CSV {
     public class GoldController {
         private string filepath;
         static int runs = 0;
-        int retrievementIndex = 0;
         public GoldController(string filepath) {
             this.filepath = filepath;
         }

@@ -25,12 +25,21 @@ class Server
 {
     //Stole some code from here
     //https://stackoverflow.com/questions/27021665/c-sharp-websocket-sending-message-back-to-client
-    public static string path = "C:/Users/simon/Documents/GitHub/big-data-semester-project/GoldStockWebSocket/Gold/export/test/m5.csv";
+    public static string path = "./m5.csv";
     public static void Main(string[] args) {
         string ip;
         int port;
+        /*
+        Console.WriteLine("Starting");
+        Console.WriteLine(Directory.GetCurrentDirectory());
+        foreach(string file in Directory.GetFileSystemEntries(Directory.GetCurrentDirectory())) {
+            Console.WriteLine(file);
+        }
+        Directory.SetCurrentDirectory("GoldWebSocket");
+        Console.WriteLine("new: " + Directory.GetCurrentDirectory());*/
 
         if(args.Length == 0) {
+            Console.WriteLine("No Custom Args Were Given");
             ip = "127.0.0.1";
             port = 80;
         }
@@ -38,6 +47,7 @@ class Server
             ip = args[0];
             port = int.Parse(args[1]);
             path = args[2];
+            Console.WriteLine($"IP: {ip}\nPort: {port}\nPath: {path}");
             if(args.Length > 3) {
                 if(args[3] == "actions")
                     return;
@@ -49,8 +59,9 @@ class Server
         var server = new TcpListener(IPAddress.Parse(ip), port);
 
         server.Start();
-        Console.WriteLine("Server has started on {0}:{1}, Waiting for a connection�", ip, port);
         GoldController goldController = new GoldController(path);
+        Console.WriteLine("Server has started on {0}:{1}, Waiting for a connection�", ip, port);
+        Console.WriteLine($"goldController Created, {goldController.getGoldString()}");
         while (true) {
             TcpClient client = server.AcceptTcpClient();
             Console.WriteLine("A client connected.");

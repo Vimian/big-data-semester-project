@@ -68,6 +68,14 @@ ECHO Uninstall dataset loader
 
 kubectl delete -f ./mockup/dataset-loader/dataset-loader.yaml -n mockup
 
+ECHO Uninstall websocket gateway
+
+cd mockup/websocket-gateway
+
+kubectl delete -f websocket-gateway.yaml -n mockup
+
+cd ../..
+
 ECHO.
 ECHO Uninstall successful
 pause

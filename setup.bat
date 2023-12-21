@@ -109,6 +109,18 @@ kubectl apply -f redis.yaml -n redis
 
 cd ..
 
+ECHO create websocket gateway
+ECHO.
+
+cd mockup/websocket-gateway
+
+docker build -t websocket-gateway -f ./Dockerfile .
+
+kubectl create namespace mockup
+kubectl apply -f ./websocket-gateway.yaml -n mockup
+
+cd ../..
+
 ECHO.
 ECHO Setup successful
 pause
